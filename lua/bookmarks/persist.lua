@@ -5,9 +5,15 @@ local sync = require("bookmarks.sync")
 
 local M = {}
 
+local function startsWith(str, start)
+    return string.sub(str, 1, string.len(start)) == start
+end
+
 local function persist_path()
     local branch = vim.fn.systemlist("git branch --show-current")[1] or ""
-    if config.persist.per_branch then
+    if startsWith(branch, "fatal:") == true then
+        return config.persist.dir .. "/" .. ".bookmarks.json"
+    elseif config.persist.per_branch then
         return config.persist.dir .. "/" .. branch .. ".json"
     else
         return config.persist.dir .. "/" .. ".bookmarks.json"
