@@ -52,6 +52,21 @@ return {
             end,
             group = bookmarkGroup,
         })
+
+        -- Alternative case, if using a plugin like alpha.nvim
+        -- which will not VimEnter, SessionLoadPost immediately and cause errors
+        -- restore_called variable so that there aren't unexpected issues from many loads
+        local restore_called = false
+        -- autocmd to restore bookmarks from the json backup file
+        local bookmarkGroup = vim.api.nvim_create_augroup('bookmark_auto_restore', {})
+        vim.api.nvim_create_autocmd('BufReadPost', {
+          callback = function()
+            if not restore_called then
+              bm.restore()
+              restore_called = true
+            end
+          end,
+          group = bookmarkGroup,
     end,
 }
 ```
