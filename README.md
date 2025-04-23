@@ -94,6 +94,15 @@ require("lualine").setup({
 ```lua
 require("telescope").load_extension("bookmarks")
 vim.keymap.set("n", "<leader>b", function() require("telescope").extensions.bookmarks.list() end)
+
+-- To extend themes or options, do something like:
+require('telescope').load_extension 'bookmarks'
+vim.keymap.set('n', '<leader>sm', function()
+require('telescope').extensions.bookmarks.list {
+  prompt_title = 'Search Bookmarks',
+  theme = 'get_cursor',
+}
+end)
 ```
 
 # Credit
