@@ -12,8 +12,17 @@ local function get_relative_path(bufnr)
     return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":~:.")
 end
 
+local themes = require("telescope.themes")
 local function bookmark_picker(opts)
     opts = opts or {}
+
+    if opts.theme == "get_cursor" then
+        opts = vim.tbl_deep_extend("force", opts, themes.get_cursor())
+    elseif opts.theme == "get_dropdown" then
+        opts = vim.tbl_deep_extend("force", opts, themes.get_dropdown())
+    elseif opts.theme == "get_ivy" then
+        opts = vim.tbl_deep_extend("force", opts, themes.get_ivy())
+    end
 
     bookmark.update_bufnr()
     local bs = bookmark.list()
@@ -33,7 +42,7 @@ local function bookmark_picker(opts)
         local displayer = entry_display.create({
             separator = " ",
             items = {
-                { width = 2 },
+                { width = 10 },
                 { remaining = true },
             },
         })
