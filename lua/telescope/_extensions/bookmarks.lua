@@ -33,7 +33,7 @@ local function bookmark_picker(opts)
         local displayer = entry_display.create({
             separator = " ",
             items = {
-                { width = 10 },
+                { width = 2 },
                 { remaining = true },
             },
         })
